@@ -1,17 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from .. import models, schemas
-from ..database import SessionLocal
+from ..dependencies import get_db
 
 router = APIRouter(prefix="/categories", tags=["Categories"])
-
-# DB dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 # Create a new category
 @router.post("/", response_model=schemas.CategoryOut)
